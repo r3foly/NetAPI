@@ -4,6 +4,7 @@ from threading import Lock
 import argparse
 from sys import stdout
 from api.security.fingerprint import FingerPrint
+from time import sleep
 
 # global
 found_ports = []
@@ -46,12 +47,15 @@ def main() -> None:
                 stdout.write(f"\r> port scanned : {port} ( {(port / args.range) * 100:.2f}%)")
                 stdout.flush()
 
-    print()
+    print("\033[2J\033[H")
 
+
+    print(f"[+] Starting a Payload Driven Identification (Per Port)")
 
     for port in found_ports:
         fingerprint.payload_driven(args.host , port)
 
+    sleep(1)
     print("> By Port Number ( BASED ON PORT NUMBER )")
     
     for port in found_ports:
